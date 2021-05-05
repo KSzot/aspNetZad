@@ -9,5 +9,7 @@ namespace RejestrOsobProjekt.Models
     public class StoreContext : DbContext
     {
         public DbSet<Human> Humans { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<User> Users { get; set; }
     }
 }

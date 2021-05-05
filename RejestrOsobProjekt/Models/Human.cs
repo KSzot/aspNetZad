@@ -14,12 +14,13 @@ namespace RejestrOsobProjekt.Models
         public string Name { get; set; }
         [StringLength(50)]
         public string LastName { get; set; }
-
+        [DataType(DataType.Date)]
         public DateTime DateoFBirth { get; set; }
 
         public string Place { get; set; }
 
         public string Description { get; set; }
+        [DataType(DataType.Date)]
         public DateTime CreatedDate { get; set; }
        
     }
