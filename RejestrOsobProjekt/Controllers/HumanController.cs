@@ -1,6 +1,8 @@
 ﻿using RejestrOsobProjekt.Models;
+using RejestrOsobProjekt.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -20,12 +22,30 @@ namespace RejestrOsobProjekt.Controllers
 
         public ActionResult Create()
         {
-            return View();
+            var gender = _context.Genders.ToList();
+            var viewModel = new HumanFormViewModel { human = new Human(), genders = gender };
+            return View(viewModel);
         }
         [HttpPost]
-        public ActionResult Create(Human human)
+        public ActionResult Create(Human human, HttpPostedFileBase ImageFile)
+
         {
+            if (!ModelState.IsValid)
+            {
+                var gender = _context.Genders.ToList();
+                var viewModel = new HumanFormViewModel { human = human, genders = gender };
+                return View("Create",viewModel);
+            }
+            if(ImageFile != null)
+            {
+                using (var ms = new MemoryStream())
+                {
+                    ImageFile.InputStream.CopyTo(ms);
+                    human.Image = ms.ToArray();
+                }
+            }
             human.CreatedDate = DateTime.Now;
+            
             _context.Humans.Add(human);
             _context.SaveChanges();
 

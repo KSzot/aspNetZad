@@ -11,5 +11,6 @@ namespace RejestrOsobProjekt.Models
         public DbSet<Human> Humans { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<Gender> Genders { get; set; }
     }
 }

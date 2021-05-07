@@ -1,10 +1,12 @@
 ﻿using RejestrOsobProjekt.Models;
+using RejestrOsobProjekt.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.Entity;
 
 namespace RejestrOsobProjekt.Controllers
 {
@@ -24,7 +26,7 @@ namespace RejestrOsobProjekt.Controllers
 
         public ActionResult Missing()
         {
-            var human = _context.Humans.ToList();
+            var human = _context.Humans.Include(c => c.Gender).ToList();
             return View(human);
         }
         public ActionResult About()
@@ -45,7 +47,7 @@ namespace RejestrOsobProjekt.Controllers
         {
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            var human = _context.Humans.SingleOrDefault(person => person.Id == id);
+            var human = _context.Humans.Include(c => c.Gender).SingleOrDefault(person => person.Id == id);
             if (human == null) return HttpNotFound();
             return View(human);
         }
