@@ -24,5 +24,8 @@ namespace RejestrOsobProjekt.Models
         [DataType(DataType.Password)]
         public string Password { get; set; }
         public bool IsActive  { get; set; }
+        //foregin key
+        public int RoleId { get; set; }
+        public Role Role { get; set; }
     }
 }

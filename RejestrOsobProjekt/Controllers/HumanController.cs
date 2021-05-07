@@ -25,6 +25,7 @@ namespace RejestrOsobProjekt.Controllers
         [HttpPost]
         public ActionResult Create(Human human)
         {
+            human.CreatedDate = DateTime.Now;
             _context.Humans.Add(human);
             _context.SaveChanges();
 
@@ -61,6 +62,14 @@ namespace RejestrOsobProjekt.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult Details(int? id)
+        {
+            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            var human = _context.Humans.SingleOrDefault(person => person.Id == id);
+            if (human == null) return HttpNotFound();
+            return View(human);
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)
