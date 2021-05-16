@@ -35,5 +35,7 @@ namespace RejestrOsobProjekt.Models
 
         [Display(Name = "Zdjęcie")]
         public byte[] Image { get; set; }
+
+        public string whichUser { get; set; }
     }
 }

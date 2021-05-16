@@ -35,7 +35,6 @@ namespace RejestrOsobProjekt.Controllers
                 return View("Register", user);
             }
             user.RoleId = 2;
-      
             _context.Users.Add(user);
             _context.SaveChanges();
 
@@ -63,6 +62,7 @@ namespace RejestrOsobProjekt.Controllers
             {
                 var tmp = _context.Roles.Find(loginUser.RoleId).Title; 
                 Session["UserName"] = _context.Roles.Find(loginUser.RoleId).Title;
+                Session["UserId"] = loginUser.Id;
                 return RedirectToAction("Index", "Home");
             }
        
