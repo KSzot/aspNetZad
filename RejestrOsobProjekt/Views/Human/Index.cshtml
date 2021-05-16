@@ -35,7 +35,8 @@ else
                 @Html.DisplayNameFor(model => model.LastName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Gender.Name)
+                @*@Html.DisplayNameFor(model => model.Gender.Name)*@
+                @Html.ActionLink("Płeć", "Index", new { sortOrder = ViewBag.NameSortParm })
             </th>
 
             <th></th>

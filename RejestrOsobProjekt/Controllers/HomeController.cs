@@ -24,9 +24,18 @@ namespace RejestrOsobProjekt.Controllers
             return View();
         }
 
-        public ActionResult Missing()
+        public ActionResult Missing(string sortOrder)
         {
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "gender_desc" : "";
             var human = _context.Humans.Include(c => c.Gender).ToList();
+            if (!String.IsNullOrEmpty(sortOrder))
+            {
+                human = _context.Humans.Include(c => c.Gender).OrderByDescending(h => h.GenderId).ToList();
+            }
+            else
+            {
+                human = _context.Humans.Include(c => c.Gender).OrderBy(h => h.GenderId).ToList();
+            }
             return View(human);
         }
         public ActionResult About()

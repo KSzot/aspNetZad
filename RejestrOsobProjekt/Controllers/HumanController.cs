@@ -109,8 +109,9 @@ namespace RejestrOsobProjekt.Controllers
         }
 
         // GET: Human
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder)
         {
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "gender_desc" : "";
             if (Session["UserName"] != null)
             {
                 if (Session["UserName"].ToString() == "User")
@@ -121,6 +122,14 @@ namespace RejestrOsobProjekt.Controllers
 
                         string userId = Session["UserId"].ToString();
                         var human = _context.Humans.Where(el => el.whichUser == userId).Include(c => c.Gender).ToList();
+                        if (!String.IsNullOrEmpty(sortOrder))
+                        {
+                             human = _context.Humans.Where(el => el.whichUser == userId).Include(c => c.Gender).OrderByDescending(h => h.GenderId).ToList();
+                        }else
+                        {
+                             human = _context.Humans.Where(el => el.whichUser == userId).Include(c => c.Gender).OrderBy(h => h.GenderId).ToList();
+                        }
+                        
 
                         return View(human);
                     }
@@ -132,8 +141,14 @@ namespace RejestrOsobProjekt.Controllers
                 else
                 {
                     var human = _context.Humans.Include(c => c.Gender).ToList();
-
-                    return View(human);
+                    if (!String.IsNullOrEmpty(sortOrder))
+                    {
+                         human = _context.Humans.Include(c => c.Gender).OrderByDescending(h => h.GenderId).ToList();
+                    }else
+                    {
+                        human = _context.Humans.Include(c => c.Gender).OrderBy(h => h.GenderId).ToList();
+                    }
+                        return View(human);
                 }
             }else
             {
